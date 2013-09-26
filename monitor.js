@@ -31,13 +31,15 @@ function changeAvInfo () {
 					success: function (data) {
 						if (data['status'] == 200) {
 							stats = getAvStats(antiviruses['result'], data['result']);
-							$(placeholder).text(JSON.stringify(stats));
+							$(placeholder).text('Updated: ' + 
+								(new Date).toString() + '\n' +
+								JSON.stringify(stats));
 						} else {
 							alert(data['stats'] + ' ' + data['message']);
 						}
 					},
 					error: function (err) {
-						alert('Error: ' + err);
+						alert('Error: ' + JSON.stringify(err));
 					}
 				});
 			} else {
@@ -45,7 +47,7 @@ function changeAvInfo () {
 			}
 		},
 		error: function (err) {
-			alert('Error: ' + err);
+			alert('Error: ' + JSON.stringify(err));
 		}
 	});
 }
