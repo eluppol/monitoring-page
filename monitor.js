@@ -38,16 +38,16 @@ function changeAvInfo () {
 							alert(data['stats'] + ' ' + data['message']);
 						}
 					},
-					error: function (err) {
-						alert('Error: ' + JSON.stringify(err));
+					error: function (jqXHR, status, err) {
+						$(placeholder).text('status: ' + status + '\nerror: ' + err + '\n' + JSON.stringify(jqXHR));
 					}
 				});
 			} else {
 				alert(antiviruses['stats'] + ' ' + antiviruses['message']);
 			}
 		},
-		error: function (err) {
-			alert('Error: ' + JSON.stringify(err));
+		error: function (jqXHR, status, err) {
+			$(placeholder).text('status: ' + status + '\nerror: ' + err + '\n' + JSON.stringify(jqXHR));
 		}
 	});
 }
