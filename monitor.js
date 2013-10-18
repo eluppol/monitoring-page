@@ -35,19 +35,19 @@ function changeAvInfo () {
 								(new Date).toString() + '\n' +
 								JSON.stringify(stats));
 						} else {
-							alert(data['stats'] + ' ' + data['message']);
+							//alert(data['status'] + ' ' + data['message']);
 						}
 					},
 					error: function (jqXHR, status, err) {
-						$(placeholder).text('status: ' + status + '\nerror: ' + err + '\n' + JSON.stringify(jqXHR));
+						$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse:' + JSON.stringify(jqXHR));
 					}
 				});
 			} else {
-				alert(antiviruses['stats'] + ' ' + antiviruses['message']);
+				//alert(antiviruses['status'] + ' ' + antiviruses['message']);
 			}
 		},
 		error: function (jqXHR, status, err) {
-			$(placeholder).text('status: ' + status + '\nerror: ' + err + '\n' + JSON.stringify(jqXHR));
+			$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
 		}
 	});
 }
