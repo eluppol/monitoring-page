@@ -8,9 +8,7 @@ var from;
 var to = getDateTimeString(new Date((new Date()).valueOf() - interval));
 
 function changeAvInfo () {
-	console.log('function started');
-	from = to;
-	to = getDateTimeString(new Date());
+	from = '1min'
 	$.ajax({
 		dataType: "jsonp",
 		url: 'http://avms.dit.in.ua/api/antiviruses',
@@ -22,11 +20,10 @@ function changeAvInfo () {
 			if (antiviruses['status'] == 200) {
 				$.ajax({
 					dataType: "jsonp",
-					url: 'http://avms.dit.in.ua/api/av_info',
+					url: 'http://avms.dit.in.ua/api/results',
 					data: {
 						'file_id' : 35,
 						'from' : from,
-						'to' : to
 					},
 					success: function (data) {
 						if (data['status'] == 200) {
@@ -100,9 +97,4 @@ function getAvStats(avs, data) {
 	});
 	console.log('stats: ' + JSON.stringify(stats));
 	return stats;
-}
-
-function getDateTimeString (date) {
-	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' 
-		+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 }
