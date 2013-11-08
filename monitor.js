@@ -4,8 +4,8 @@ $(function () {
 	setInterval(changeAvInfo, interval);
 });
 
-var from;
-var to = getDateTimeString(new Date((new Date()).valueOf() - interval));
+//var from;
+//var to = getDateTimeString(new Date((new Date()).valueOf() - interval));
 
 function changeAvInfo () {
 	from = '1min'
@@ -15,6 +15,7 @@ function changeAvInfo () {
 		data: {
 			'fields' : ['id', 'full_name'],
 			'active' : 1,
+			'limit' : 100,
 		},
 		success: function (antiviruses) {
 			if (antiviruses['status'] == 200) {
@@ -28,9 +29,9 @@ function changeAvInfo () {
 					success: function (data) {
 						if (data['status'] == 200) {
 							stats = getAvStats(antiviruses['result'], data['result']);
-							$(placeholder).text('Updated: ' + 
-								(new Date).toString() + '\n' +
-								JSON.stringify(stats));
+							$(placeholder).html('Updated: ' + 
+								(new Date).toString() + '<br>' +
+								getHtml(stats));
 						} else {
 							//alert(data['status'] + ' ' + data['message']);
 						}
@@ -78,14 +79,16 @@ function getAvStats(avs, data) {
 				console.log(name);
 				info = { 'id': av['id'], 'name': name, 'working': 0 };
 			}
-			var prev = findInArray(stats, 'id', av['id']);
-			if (prev != -1) {
-				if (result['time'] > stats[prev]['time']) {
-					stats[prev] = info;
-				}
-			} else {
-				stats.push(info);
+		} else {
+			info = {'id' : av['id'], 'name' : name, 'working' : 0};
+		}
+		var prev = findInArray(stats, 'id', av['id']);
+		if (prev != -1) {
+			if (result['time'] > stats[prev]['time']) {
+				stats[prev] = info;
 			}
+		} else {
+			stats.push(info);
 		}
 	}
 	stats.sort(function (a, b) {
@@ -97,4 +100,26 @@ function getAvStats(avs, data) {
 	});
 	console.log('stats: ' + JSON.stringify(stats));
 	return stats;
+}
+
+function getHtml(data) {
+	var result = '<table>';
+	for (var i = 0; i < data.length; i++) {
+		var row = data[i];
+		result += '<tr>';
+		result += '<td>';
+		result += row['name'];
+		result += '</td>';
+		result += '<td>';
+		result += getCircle(row['working']);
+		result += '</td>';
+		result += '</tr>';
+	}
+	result += '</table>';
+	return result;
+}
+
+function getCircle(working) {
+	var color = working ? 'green' : 'red';
+	return '<svg><circle cx="20" cy="20" r="20" fill="' + color + '"/></svg>';
 }
