@@ -119,7 +119,12 @@ function getHtml(data) {
 	return result;
 }
 
+//function getCircle(working) {
+//	var color = working ? 'green' : 'red';
+//	return '<svg><circle cx="20" cy="20" r="20" fill="' + color + '"/></svg>';
+//}
+
 function getCircle(working) {
-	var color = working ? 'green' : 'red';
-	return '<svg><circle cx="20" cy="20" r="20" fill="' + color + '"/></svg>';
+	var name = working ? 'yes' : 'no';
+	return '<img src="img/' + name + '.jpg" witdh="40" height="40"/>';
 }
