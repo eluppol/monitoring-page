@@ -47,7 +47,13 @@ function changeAvInfo () {
 			}
 		},
 		error: function (jqXHR, status, err) {
-			$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
+			if (status > 500) {
+				$(placeholder).html('<h2>ORACUL IS DEAD!</h2><br><h1>GAME OVER</h1>');
+			} else if (status == 400) {
+				$(placeholder).html('<h2>NO DATA</h2>');
+			} else {
+				$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
+			}
 		}
 	});
 }
@@ -123,9 +129,10 @@ function getAvStats(avs, data, timeResults) {
 		
 		for (var j = timeResults.length - 1; j >= 0; j--) {
 			if (timeResults[j].av_id == av.id) {
-				if (isWorking(timeResults[j]) == info.working && timeResults[j].time) {
+				if (isWorking(timeResults[j]) == info.working) {
 					//console.log('time: ' + timeResults[j].time);
-					time = timeResults[j].time;
+					if (timeResults[j].time)
+						time = timeResults[j].time;
 				} else {
 					//console.log('res: ' + JSON.stringify(timeResults[j]));
 					//console.log('time: ' + timeResults[j].time + '\n');
