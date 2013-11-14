@@ -47,10 +47,10 @@ function changeAvInfo () {
 			}
 		},
 		error: function (jqXHR, status, err) {
-			if (status > 500) {
-				$(placeholder).html('<h2>ORACUL IS DEAD!</h2><br><h1>GAME OVER</h1>');
-			} else if (status == 400) {
-				$(placeholder).html('<h2>NO DATA</h2>');
+			if (jqXHR.status > 500) {
+				$(placeholder).html('<h1>ORACUL IS DEAD.</h1><br><h1>GAME OVER.</h1>');
+			} else if (jqXHRstatus == 400) {
+				$(placeholder).html('<h1>NO DATA</h1>');
 			} else {
 				$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
 			}
