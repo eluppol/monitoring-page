@@ -39,7 +39,13 @@ function changeAvInfo () {
 						}
 					},
 					error: function (jqXHR, status, err) {
-						$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse:' + JSON.stringify(jqXHR));
+						if (jqXHR.status > 500) {
+							$(placeholder).html('<h1>ORACUL IS DEAD.</h1><br><h1>GAME OVER.</h1>');
+						} else if (jqXHR.status == 400) {
+							$(placeholder).html('<h1>NO DATA</h1>');
+						} else {
+							$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
+						}
 					}
 				});
 			} else {
@@ -49,7 +55,7 @@ function changeAvInfo () {
 		error: function (jqXHR, status, err) {
 			if (jqXHR.status > 500) {
 				$(placeholder).html('<h1>ORACUL IS DEAD.</h1><br><h1>GAME OVER.</h1>');
-			} else if (jqXHRstatus == 400) {
+			} else if (jqXHR.status == 400) {
 				$(placeholder).html('<h1>NO DATA</h1>');
 			} else {
 				$(placeholder).text('status: ' + jqXHR['status'] + '\nerror: ' + err + '\nResponse: ' + JSON.stringify(jqXHR));
