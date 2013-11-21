@@ -8,7 +8,7 @@ $(function () {
 //var to = getDateTimeString(new Date((new Date()).valueOf() - interval));
 
 function changeAvInfo () {
-	from = '1min'
+	from = '1h'
 	$.ajax({
 		dataType: "jsonp",
 		url: 'http://avms.dit.in.ua/api/antiviruses',
